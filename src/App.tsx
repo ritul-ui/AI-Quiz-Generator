@@ -126,31 +126,34 @@ Article:
     reader.readAsText(file);
   }
 
-  function exportToPDF() {
+function exportToPDF() {
     const doc = new jsPDF();
     let y = 10;
     doc.setFontSize(14);
     doc.text("Summary", 10, y);
     y += 10;
     doc.setFontSize(11);
-    doc.text(doc.splitTextToSize(summary, 180), 10, y);
+    const summaryLines = doc.splitTextToSize(summary, 180);
+    doc.text(summaryLines, 10, y);
+    y += summaryLines.length * 7 + 10; // 7 is approx line height
 
-    y += 40;
     doc.setFontSize(14);
     doc.text("MCQs", 10, y);
     y += 10;
     doc.setFontSize(11);
-    doc.text(doc.splitTextToSize(mcqs, 180), 10, y);
+    const mcqLines = doc.splitTextToSize(mcqs, 180);
+    doc.text(mcqLines, 10, y);
+    y += mcqLines.length * 7 + 10;
 
-    y += 50;
     doc.setFontSize(14);
     doc.text("Fill in the Blanks", 10, y);
     y += 10;
     doc.setFontSize(11);
-    doc.text(doc.splitTextToSize(fillBlanks, 180), 10, y);
+    const fillLines = doc.splitTextToSize(fillBlanks, 180);
+    doc.text(fillLines, 10, y);
 
     doc.save("quiz_notes.pdf");
-  }
+}
 
   return (
     <div className="container">
